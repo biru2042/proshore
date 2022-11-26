@@ -19,7 +19,7 @@
     </head>
     <body>
         <div id="app">
-            <example-component></example-component>
+            <event-component></event-component>
         </div>
         @vite('resources/js/app.js')
     </body>

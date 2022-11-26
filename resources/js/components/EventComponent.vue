@@ -31,24 +31,23 @@
                         <td>{{ event.startDate }}</td>
                         <td>{{ event.endDate }}</td>
                         <td>
-                            <button class="alert alert-sm alert-danger" v-on:click="editEvent(event, index)">Edit</button>
-                            <button class="alert alert-sm alert-info mx-2" v-on:click="deleteEvent(event.id, index)">Delete</button>
+                            <button class="alert alert-sm alert-info" v-on:click="editEvent(event, index)">Edit</button>
+                            <button class="alert alert-sm alert-danger mx-2" v-on:click="deleteEvent(event.id, index)">Delete</button>
                         </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="col-md-4">
-                <p v-if="errors.length">
+                <p class="errors" v-if="errors.length">
                     <b>Please correct the following error(s):</b>
                     <ul>
-                    <li v-for="error in errors">{{ error }}</li>
+                        <li v-for="error in errors">{{ error }}</li>
                     </ul>
                 </p>
 
                 <form ref="submitEventData" action="" @submit.prevent="submitForm">
-                <!-- <form ref="submitEventData"> -->
-                    <input type="text" v-model="id">
+                    <input type="hidden" v-model="id">
                     <div class="form-group">
                         <label for="">Title</label>
                         <input type="text" v-model="title" class="form-control" >
@@ -69,9 +68,9 @@
                         <input type="date" v-model="endDate" class="form-control" >
                     </div>
                     <button v-if="!isEdit" type="submit" class="btn btn-primary my-3">Save</button>
-                    <!-- <button v-if="!isEdit" type="submit" class="btn btn-primary my-3" v-on:click="submitForm()" value="Save">Save</button> -->
+                    
                     <button v-else type="submit" class="btn btn-primary my-3" >Update</button>
-                    <!-- <button v-else type="submit" class="btn btn-primary my-3" v-on:click="update()">Update</button> -->
+                    
                 </form>
             </div>
         </div>
@@ -80,6 +79,7 @@
 
 <script>
     export default {  
+        name:'EventComponent',
         data(){
             return{
                 id:'',
@@ -135,9 +135,8 @@
             },
 
             submitForm(e){
-                // alert('hello')
-                // e.preventDefault();
-                if (this.title && this.description && this.title && this.description) {
+                
+                if (this.title && this.description && this.startDate && this.endDate) {
                     this.errors = [];
                     if(!this.id){
                     axios.post('/backend/api/event', {
@@ -207,21 +206,24 @@
                 if (!this.description) {
                     this.errors.push('Description field is required.');
                 }
+                if (!this.startDate) {
+                    this.errors.push('Start date field is required.');
+                }
+                if (!this.endDate) {
+                    this.errors.push('End date field is required.');
+                }
             }
-        },
-        mounted() {
-            // this.getEvents()
-
-            console.log(this.events)
         },
         created(){
             this.getEvents()
-            console.log(this.events)
         }
     }
 </script>
 <style scoped>
 button{
     padding:5px;
+}
+.errors li{
+    color: red;
 }
 </style>
