@@ -39,8 +39,13 @@
                 </table>
             </div>
             <div class="col-md-4">
+                <div v-for="(errorArray, idx) in errorss" :key="idx">
+                    <div v-for="(allErrors, idx) in errorArray" :key="idx">
+                        <span class="text-danger">{{ allErrors}} </span>
+                    </div>
+                </div>
+
                 <p class="errors" v-if="errors.length">
-                    <b>Please correct the following error(s):</b>
                     <ul>
                         <li v-for="error in errors">{{ error }}</li>
                     </ul>
@@ -89,7 +94,8 @@
                 endDate:'',
                 events:[],
                 errors: [],
-                isEdit:false
+                isEdit:false,
+                errorss:''
             }
         },
         methods:{
@@ -136,6 +142,7 @@
 
             submitForm(e){
                 
+                
                 if (this.title && this.description && this.startDate && this.endDate) {
                     this.errors = [];
                     if(!this.id){
@@ -155,10 +162,11 @@
                         this.getEvents()
                     })
                     .catch(error => {
-                        // console.log(error.response.data.data);
                         let errorMsg = error.response.data.data;
+                        this.errorss = errorMsg
+                        // console.log(errorMsg);
 
-                        for(let i=0; i<=errorMsg.length; i++ ){
+                        for(let i=0; i<=errorMsg; i++ ){
                             console.log(errorMsg[i])
                             this.errors.push(errorMsg[i]);
                         }
@@ -184,8 +192,8 @@
                         this.getEvents()
                     })
                     .catch(error => {
-                        // console.log(error.response.data.data);
                         let errorMsg = error.response.data.data;
+                        console.log(errorMsg.length);
 
                         for(let i=0; i<=errorMsg.length; i++ ){
                             console.log(errorMsg[i])
@@ -212,6 +220,7 @@
                 if (!this.endDate) {
                     this.errors.push('End date field is required.');
                 }
+
             }
         },
         created(){
