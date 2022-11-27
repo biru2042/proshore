@@ -33,12 +33,4 @@ class ExampleTest extends TestCase
         $response = $this->get('/api/event');
         $this->assertEquals(3, count($response->json()));
     }
-
-    // public function test_put_event_method(){
-    //     // $event = Event::find(18);
-    //     // dd(request()->all());
-    //     $response = $this->put('/api/event/49');
-    //     dd($response->json());
-    //     $response->assertStatus(200);
-    // }
 }
