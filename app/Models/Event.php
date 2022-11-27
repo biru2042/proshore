@@ -11,6 +11,4 @@ class Event extends Model
     use HasFactory;
 
     protected $guarded = [];
-
-    // protected $appends = ['start_date_format', 'end_date_format'];
 }

@@ -22,16 +22,16 @@ class EventController extends Controller
     {
         $q = Event::query();
         $nowDates = Carbon::today();
-        // dd($nowDate);
+        
         $nowDate = date('Y-m-d');
         if($request->name == 'finished'){
             $q->whereDate('endDate', '<', $nowDate);
         }
         if($request->name == 'upcomming'){
-            $q->whereDate('endDate', '>', $nowDate);
+            $q->whereDate('startDate', '>', $nowDate);
         }
         if($request->name == 'upcomming_seven_days'){
-            // dd($nowDate);
+            
             $addSevenDays = $nowDates->add(7,'days');
             
             $q->whereBetween('endDate', [$nowDate, $addSevenDays]);
@@ -46,16 +46,6 @@ class EventController extends Controller
         $results = EventResource::collection($events);
         
         return ApiResponse::sendResponse(false,'success',['data' => $results, 'total' => 8, 'page' => 20],200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -126,5 +116,6 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $event->delete();
+        return ApiResponse::sendResponse(false,'success',['results' => ''],200);
     }
 }
