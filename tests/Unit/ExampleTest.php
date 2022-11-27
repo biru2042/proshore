@@ -18,23 +18,28 @@ class ExampleTest extends TestCase
     public function test_that_true_is_true()
     {
         $response = $this->post('/api/event');
- 
-        // $response->assertStatus(200);
-        // $response = $this->get('/api/event');
-        // $this->assertTrue(true);
-        // $response->assertStatus(200);
         $event = Event::factory()->create();
         $hasEvent = $event ? true : false;
         // $this->assertTrue($hasEvent);
-
-        // $stock = new Event(['title'=>'Tesla', 'description'=>'sfsfsdf', 'startDate' => '2022-11-31', 'endDate' => '2022-12-01']);
-        // $this->assertEquals('Tesla', $stock->name);
-
-        // $response = $this->actingAs($event)->get('/event');
-
-        // $response->assertStatus(200);
-
-        // $response = $this->get('/event');
         $this->assertTrue(true);
+    }
+
+    public function test_get_base_method(){
+        $response = $this->get('/');
+        $response->assertStatus(200);
+    }
+
+    public function test_get_event_method(){
+        $this->withExceptionHandling();
+        $response = $this->get('/api/event');
+        // dd($response->json());
+        $this->assertEquals(3, count($response->json()));
+        // $response->assertStatus(200);
+    }
+
+    public function test_put_event_method(){
+        $response = $this->put('/api/event/1');
+        dd($response->json());
+        $response->assertStatus(200);
     }
 }

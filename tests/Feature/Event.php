@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Event as EventModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -21,8 +22,10 @@ class Event extends TestCase
     }
 
     public function create_a_event_record(){
-        $event = Event::factory()->create();
-        
+        $event = EventModel::factory()->create();
+        $hasEvent = $event ? true : false;
+        $this->assertTrue($hasEvent);
+        $this->assertTrue(true);
 
     }
 }
