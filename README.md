@@ -1,1 +1,1 @@
-First of all clone the project from the repo update composer in latest version php version should be above 8.1 migrate the database schema then run the project and you will see the required assessment in home page
+First of all clone the project from the repo update composer in latest version php version should be above 8.1 migrate the database schema then run the project and you will see the required assessment in home page. Vue js is used as a frontend library.
